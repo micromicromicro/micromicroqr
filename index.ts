@@ -1,19 +1,24 @@
-import { qrcode } from "qrcode-generator-es6";
+import qrcode from "qrcode-generator-es6";
 import { qrMicro } from "./qr_micro";
 
 export const genericSvgString = ({
   low,
   high,
   addr,
+  bg,
   obstructionData = null,
   obstructionPath = null
 }: {
-  low: Array<number>;
-  high: Array<number>;
-  addr: string;
-  obstructionData?: string;
-  obstructionPath?: string;
-}): string => {
+    low: Array<number>;
+    high: Array<number>;
+    addr: string;
+    bg?: {
+    	enabled: boolean;
+	fill?: string;
+    };
+    obstructionData?: string;
+    obstructionPath?: string;
+  }): string => {
   let qr = new qrcode(0, "H");
   qr.addData(addr);
   qr.make();
@@ -37,23 +42,26 @@ export const genericSvgString = ({
         "%" +
         ")"
       );
-    },
-    obstruction: obstruction
+      },
+    bg: bg,
+    obstruction: obstruction,
   });
   return svg_data;
 };
 
-export const svgString = (addr: string): string => {
+export const svgString = (addr: string, bg?: {enabled: boolean, fill?: string}): string => {
   return genericSvgString({
     addr: addr,
     low: [119 / 255 * 360, 92 / 255 * 100, 114 / 255 * 100],
     high: [152 / 255 * 360, 79 / 255 * 100, 70 / 255 * 100],
+    bg: bg,
     obstructionData: qrMicro
   });
 };
 
-export const imgElement = (addr: string) => {
+export const imgElement = (addr: string, bg?: {enabled: boolean, fill?: string}): HTMLImageElement => {
   const img = document.createElement("img");
-  img.src = "data:image/svg+xml;utf-8," + svgString(addr);
+  img.src = "data:image/svg+xml;utf-8," + svgString(addr, bg);
   img.alt = "Scan to pay with micromicro!";
+  return img
 };
