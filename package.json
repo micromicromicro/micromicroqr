@@ -3,11 +3,17 @@
   "version": "0.0.1",
   "description": "Format QR codes like micromicro does",
   "author": "micromicromicro",
-  "license": ["ISC"],
-  "bugs": {"url": "https://github.com/micromicromicro/micromicroqr/issues"},
+  "license": [
+    "ISC"
+  ],
+  "bugs": {
+    "url": "https://github.com/micromicromicro/micromicroqr/issues"
+  },
   "homepage": "https://github.com/micromicromicro/micromicroqr/issues",
   "dependencies": {
-    "qrcode-generator-es6": "^1.1.3",
+    "qrcode-generator-es6": "^1.1.3"
+  },
+  "devDependencies": {
     "typescript": "^2.8.3"
   }
 }
